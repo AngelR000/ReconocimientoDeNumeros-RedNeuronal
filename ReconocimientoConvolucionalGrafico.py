@@ -87,6 +87,6 @@ historial = modelo.fit(
 # In[21]:
 
 
-#Exportar el modelo al explorador! (Mas detalle de esto en en mi video de exportacion: https://youtu.be/JpE4bYyRADI )
+#Exportar el modelo para implementarlo al explorador
 modelo.save('numeros_conv.h5')
 
