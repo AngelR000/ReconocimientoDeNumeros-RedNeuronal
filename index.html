@@ -254,7 +254,7 @@
               document.getElementById("finalizadoResultado").innerHTML = "¡Lo sentimos!, no has pasado el captcha, intentelo de nuevo, Porcentaje de Exito: " + (valorCaptcha / 5) * 100 + "%";
               
             }
-            contador = 5;
+            contador++;
             return;
           }else{
             document.getElementById("resultado").innerHTML = "¡Incorrecto!";
@@ -265,7 +265,7 @@
             }else if(((valorCaptcha / 5) * 100)  < 50){
               document.getElementById("finalizadoResultado").innerHTML = "¡Lo sentimos!, no has pasado el captcha, intentelo de nuevo, Porcentaje de Exito: " + (valorCaptcha / 5) * 100 + "%";
             }
-            contador = 5;
+            contador++;
             return;
           }
           }
