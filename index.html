@@ -16,8 +16,18 @@
 
       .canvas-container {
           margin: 0 auto;
-          border: 1px solid #ccc;
+          border: 3px solid #ccc;
+          border-radius: 5px;
+          animation: border-color-cycle 4s infinite;
       }
+
+      @keyframes border-color-cycle {
+        0%   { border-color: rgb(58, 128, 0); }
+        25%  { border-color: rgb(72, 255, 0); }
+        50%  { border-color: rgb(16, 102, 9); }
+        75%  { border-color: rgb(0, 255, 76); }
+        100% { border-color: rgb(58, 128, 0); }
+        }
     </style>
 
   </head>
@@ -26,27 +36,28 @@
     <main>
       <div class="px-4 py-2 my-2 text-center border-bottom" style="margin-bottom: 2%;">
         <h1 class="display-6 fw-bold">Proyecto Captcha por Medio de Dibujo</h1>
+        <h5>Developed by Angel Rodriguez Zuñiga & Javier Alejandro Flores Gomez</h5>
         <div class="col-lg-6 mx-auto">
         </div>
       </div>
       <center>
       
       <div class="ContenedorNumerosAleatorios" style="width: 50%; padding: 1%; font-weight: bold; font-size: 20px; border-color: gray; border: 2px solid;margin-top: 2%;"> 
-        <span style="font-size: 22px; font-weight: lighter;">Dibuja los números con tu cursor en el recuadro grande y centrado para tener una mejor precision y completar el captcha</span>
+        <span style="font-size: 18px; font-weight: 500;">Dibuja los números con tu cursor en el recuadro grande y utilizando la mayor parte del lienzo. <span style="font-weight: bold;"><br>Hazlo a velocidad intermedia para tener una mejor precision y completar el captcha, si lo haces muy rapido puede afectar la prediccion del modelo.</span>  <br> <span style="font-weight: 800; color: #719752;">¡El numero que esté de color verde es el que debes dibujar!</span> </span>
         <div class="row" style=" margin-top: 1%;">
-          <div class="col" style="border-color: gray; border: 2px solid;">
+          <div class="col" id="1" style="border-color: gray; border: 2px solid;">
             <span id="num1"></span>
           </div>
-          <div class="col" style="border-color: gray; border: 2px solid;">
+          <div class="col"  id="2"style="border-color: gray; border: 2px solid;">
             <span id="num2"></span>
           </div>
-          <div class="col" style="border-color: gray; border: 2px solid;">
+          <div class="col" id="3" style="border-color: gray; border: 2px solid;">
             <span id="num3"></span>
           </div>
-          <div class="col" style="border-color: gray; border: 2px solid;">
+          <div class="col" id="4" style="border-color: gray; border: 2px solid;">
             <span id="num4"></span>
           </div>
-          <div class="col" style="border-color: gray; border: 2px solid;">
+          <div class="col" id="5" style="border-color: gray; border: 2px solid;">
             <span id="num5"></span>
           </div>
           <center>
@@ -95,6 +106,8 @@
         document.getElementById("finalizadoResultado").innerHTML = "";
         document.getElementById("finalizado").innerHTML = "";
         document.getElementById("resultado").innerHTML ="";
+        cas1.style.backgroundColor = "#91C367";
+        cas1.style.color = "#58773E";
         limpiar();
         var num1 = document.getElementById("num1");
         var num2 = document.getElementById("num2");
@@ -103,7 +116,6 @@
         var num5 = document.getElementById("num5");
         for (var i = 0; i < numeros.length; i++) {
           numeros[i] = Math.floor(Math.random() * 10); // Genera un número aleatorio del 0 al 9
-
           switch(i){
 
             case 0:
@@ -136,6 +148,14 @@
       var smallcanvas = document.getElementById("smallcanvas");
       var ctx2= smallcanvas.getContext("2d");
 
+      // Variables de cada casilla de numero
+      var cas1 = document.getElementById("1");
+      var cas2 = document.getElementById("2");
+      var cas3 = document.getElementById("3");
+      var cas4 = document.getElementById("4");
+      var cas5 = document.getElementById("5");
+
+
       function limpiar() {
         document.getElementById("resultado").innerHTML ="";
           ctx1.clearRect(0, 0, canvas.width, canvas.height);
@@ -167,7 +187,8 @@
             var mayorIndice = resultados.indexOf(Math.max.apply(null, resultados));
             return mayorIndice;
         }
-        var contador = 0;
+
+        var contador;
         function comparar(){
           var numeroPredicho= predecir();
           var num1 = document.getElementById("num1").textContent;
@@ -181,6 +202,10 @@
           //Comprobamos que coincida el numero ingresado por el usuario con el numero del arreglo
           if(contador==0){
             console.log(contador);
+            cas1.style.backgroundColor = "white";
+            cas1.style.color = "black";
+            cas2.style.backgroundColor = "#91C367";
+            cas2.style.color = "#58773E";
               if(numeroPredicho == parseInt(num1)){
               valorCaptcha++;
               document.getElementById("resultado").innerHTML ="¡Valor Acertado!";
@@ -195,6 +220,10 @@
           }
 
           if(contador==1){
+            cas2.style.backgroundColor = "white";
+            cas2.style.color = "black";
+            cas3.style.backgroundColor = "#91C367";
+            cas3.style.color = "#58773E";
             console.log(contador);
             if(numeroPredicho == parseInt(num2)){
             valorCaptcha++;
@@ -210,6 +239,10 @@
           }
 
           if(contador==2){
+            cas3.style.backgroundColor = "white";
+            cas3.style.color = "black";
+            cas4.style.backgroundColor = "#91C367";
+            cas4.style.color = "#58773E";
             console.log(contador);
             if(numeroPredicho == parseInt(num3)){
             valorCaptcha++;
@@ -225,21 +258,29 @@
           }
 
           if(contador==3){
+            cas4.style.backgroundColor = "white";
+            cas4.style.color = "black";
+            cas5.style.backgroundColor = "#91C367";
+            cas5.style.color = "#58773E";
             console.log(contador);
-            if(numeroPredicho == parseInt(num4)){
-            valorCaptcha++;
-            document.getElementById("resultado").innerHTML ="¡Valor Acertado!";
-            contador++;
-            return;
-          }else{
-            document.getElementById("resultado").innerHTML = "¡Incorrecto!";
-            valorCaptcha--;
-            contador++;
-            return;
-          }
+              if(numeroPredicho == parseInt(num4)){
+              valorCaptcha++;
+              document.getElementById("resultado").innerHTML ="¡Valor Acertado!";
+              contador++;
+              return;
+            }else{
+              document.getElementById("resultado").innerHTML = "¡Incorrecto!";
+              valorCaptcha--;
+              contador++;
+              return;
+            }
           }
 
           if(contador==4){
+            cas5.style.backgroundColor = "white";
+            cas5.style.color = "black";
+            cas1.style.backgroundColor = "#91C367";
+            cas1.style.color = "#58773E";
             limpiar();
             btncomprobar.textContent = "Reintentar";
             console.log(contador);
@@ -257,17 +298,17 @@
             contador++;
             return;
           }else{
-            document.getElementById("resultado").innerHTML = "¡Incorrecto!";
-            valorCaptcha--;
-            document.getElementById("finalizado").innerHTML = "¡Captcha Terminado!";
-            if(((valorCaptcha / 5) * 100)  > 51){
-              document.getElementById("finalizadoResultado").innerHTML = "¡Felicidades, has pasado el captcha!, Porcentaje de Exito: " + (valorCaptcha / 5) * 100 + "%";
-            }else if(((valorCaptcha / 5) * 100)  < 50){
-              document.getElementById("finalizadoResultado").innerHTML = "¡Lo sentimos!, no has pasado el captcha, intentelo de nuevo, Porcentaje de Exito: " + (valorCaptcha / 5) * 100 + "%";
+              document.getElementById("resultado").innerHTML = "¡Incorrecto!";
+              valorCaptcha--;
+              document.getElementById("finalizado").innerHTML = "¡Captcha Terminado!";
+              if(((valorCaptcha / 5) * 100)  > 51){
+                document.getElementById("finalizadoResultado").innerHTML = "¡Felicidades, has pasado el captcha!, Porcentaje de Exito: " + (valorCaptcha / 5) * 100 + "%";
+              }else if(((valorCaptcha / 5) * 100)  < 50){
+                document.getElementById("finalizadoResultado").innerHTML = "¡Lo sentimos!, no has pasado el captcha, intentelo de nuevo, Porcentaje de Exito: " + (valorCaptcha / 5) * 100 + "%";
+                }
+              contador++;
+              return;
             }
-            contador++;
-            return;
-          }
           }
              
            if(contador == 5){
